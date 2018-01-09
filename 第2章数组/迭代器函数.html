@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习JavaScript的数据结构和算法</title>
+</head>
+<body>
+<script type="text/javascript">
+    (function(){
+       //  假如有一个数组，它值是从1到15，如果数组里的元素可以被2整除（偶数），函数就返回true，否则返回false
+       var isEven = function (x) {
+       		//  如果x是2的倍数，就返回true
+       		console.log(x);
+       		return (x % 2 == 0) ? true : false;
+       };
+       var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+       //  用every方法迭代，every方法会迭代数组中的每个元素，直到返回false
+       numbers.every(isEven);
+       //  用some方法迭代，some方法会迭代数组的每个元素，直到函数返回true
+       numbers.some(isEven);
+       //  用forEach方法迭代
+       //  如果要迭代整个数组，可以用forEach方法。它和使用for循环的结果相同
+       numbers.forEach(function (x) {
+       		console.log((x % 2 == 0))
+       })
+       //  使用map和filter方法
+       //  JavaScript还有两个会返回新数组的遍历方法。第一个是map
+       var myMap = numbers.map(isEven);
+       console.log('myMap=' + myMap);
+       //  还有一个filter方法
+       //  它返回的新数组由使函数返回true的元素组成
+       var evenNumbers = numbers.filter(isEven);
+       console.log('evenNumbers=' + evenNumbers);
+       //  使用reduce方法
+       //  reduce方法接收一个函数作为参数，这个函数有四个参数：previousValue、currentValue、index和array。这个函数会返回一个将被叠加到累加器的值，reduce方法停止执行后会返回这个累加器。
+       var a = numbers.reduce(function (previous, current, index) {
+       	  return previous + current;
+       })
+       console.log(a);
+    })();
+</script>
+</body>
+</html>
