@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>let的变量作用域</title>
+</head>
+<body>
+<script type="text/javascript">
+    (function(){
+       //  下面例子理解let关键字声明的变量如何工作
+       let movie = 'Lord of the Rings';
+       //  var movie = 'Batman v Superman';  //抛出错误，movie变量已经被声明 （Identifier 'movie' has already been declared）
+       function starWarsFan () {
+          let movie = 'Star Wars';
+          return movie;
+       }
+       function marvelFan () {
+          movie = 'The Avengers';
+          return movie;
+       }
+       function blizzardFan () {
+          let isFan = true;
+          let phrase = 'Warcraft';
+          console.log('Before if: ' + phrase);
+          if (isFan) {
+            let phrase = 'initial text';
+            phrase = 'For the Horde!';
+            console.log('Inside if: ' + phrase);
+          }
+          phrase = 'For the Alliance!';
+          console.log('After if:' + phrase);
+       }
+       console.log(movie);  //  Lord of the Rings
+       console.log(starWarsFan());  //  Star Wars
+       console.log(marvelFan());  //  The Avengers
+       console.log(movie);  //  The Avengers
+       blizzardFan();  //  Before if: Warcraft  Inside if: For the Horde!  After if:For the Alliance!
+    })();
+</script>
+</body>
+</html>

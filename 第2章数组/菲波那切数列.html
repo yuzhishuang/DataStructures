@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菲波那切数列</title>
+</head>
+<body>
+<script type="text/javascript">
+    (function(){
+      //  求菲波那切数列的前n个数字
+      function FibonacciShow (n) {
+      	var fibonacci = [];
+      	fibonacci[1] = 1;
+      	fibonacci[2] = 2;
+      	for (var i = 3; i < n; i++) {
+      		fibonacci[i] = fibonacci[i-1] + fibonacci[i-2];
+      	}
+      	return fibonacci;
+      }
+      var a = FibonacciShow(20);
+      console.log(a);   
+    })();
+</script>
+</body>
+</html>

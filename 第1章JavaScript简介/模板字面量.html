@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模板字面量</title>
+</head>
+<body>
+<script type="text/javascript">
+    (function(){
+      //  模板字面量使我们创建字符串的时候不必再拼接值
+      var book = {
+      	name: '学习JavaScript数据结构和算法'
+      };
+      alert(`你正在阅读${book.name}。
+      	这是新的一行
+      	这也是`);
+      console.log(`你正在阅读${book.name}。
+      	这是新的一行
+      	这也是`);
+    })();
+</script>
+</body>
+</html>
