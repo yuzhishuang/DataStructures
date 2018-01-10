@@ -2,16 +2,19 @@
   <div id="app">
     <img src="./assets/logo.png">
     <HelloWorld/>
+    <stackContent />
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld'
+import stackContent from './components/stackContent'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    HelloWorld,
+    stackContent
   }
 }
 </script>

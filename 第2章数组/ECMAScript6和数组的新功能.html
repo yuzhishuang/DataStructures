@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学习JavaScript数据结构与算法</title>
+</head>
+<body>
+<script type="text/javascript">
+    (function(){
+      //  使用forEach和箭头函数迭代
+      var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+      numbers.forEach(function (x) {
+      	console.log((x % 2 == 0));	
+      })
+      //  可以简化为
+      numbers.forEach( x => {
+      	console.log((x % 2 == 0));
+      })
+      //  使用for...of循环迭代
+      for (let i of numbers) {
+      	console.log((i % 2 == 0) ? 'even' : 'odd');
+      }
+      //  ES6提供了3个方法-entries(),keys()和values()-用于遍历数组
+      var numbers1 = ['a', 'b'];
+      for (let index of numbers1.keys()) {
+      	console.log(index);
+      }
+      for (let elem of numbers1.values()) {
+      	console.log(elem);
+      }
+      for (let [index, elem] of numbers1.entries()) {
+      	console.log(index, elem);
+      }
+    })();
+</script>
+</body>
+</html>
