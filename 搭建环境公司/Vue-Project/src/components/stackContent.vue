@@ -63,9 +63,45 @@ export default {
             let r = s.pop()
             return r
           }
+          isEmpty () {
+            let s = items.get(this)
+            return s.length === 0
+          }
         }
         return Stack
       })()
+      //  用栈解决问题：从十进制到二进制
+      function divideBy2 (decNumber) {
+      	let remStack = new Stack1()				
+        let rem
+        let binaryString = ''
+        while (decNumber > 0) {
+  	      rem = Math.floor(decNumber % 2)
+  		  	remStack.push(rem)
+  		  	decNumber = Math.floor(decNumber / 2)
+        }
+        while (!remStack.isEmpty()) {
+  		  binaryString += remStack.pop().toString()
+  	    }
+  	    return binaryString
+      }
+      console.log('divideBy2(10)=' + divideBy2(10))
+      //  可以传入其他任意进制的基数为参数
+      function baseConverter (decNumber, base) {
+        let remStack = new Stack1()       
+        let rem
+        let baseString = ''
+        let digits = '0123456789ABCDEF'
+        while (decNumber > 0) {
+          rem = Math.floor(decNumber % base)
+          remStack.push(rem)
+          decNumber = Math.floor(decNumber / base)
+        }
+        while (!remStack.isEmpty()) {
+        binaryString += digits[remStack.pop()]
+        }
+        return baseString 
+      }
     }
   },
   created () {

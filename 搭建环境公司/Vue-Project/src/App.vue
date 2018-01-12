@@ -3,18 +3,21 @@
     <img src="./assets/logo.png">
     <HelloWorld/>
     <stackContent />
+    <duilieContent />
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld'
 import stackContent from './components/stackContent'
+import duilieContent from './components/duilieContent'
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
-    stackContent
+    stackContent,
+    duilieContent
   }
 }
 </script>
