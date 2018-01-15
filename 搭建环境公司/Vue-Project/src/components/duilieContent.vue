@@ -49,6 +49,59 @@ export default {
       queue.dequeue()
       queue.print()
       this.es6Demo()
+      //  优先队列，元素的添加和移除是基于优先级的
+      function PriorityQueue () {
+        let items = []
+	      function QueueElement (element, priority) {
+	        this.element = element
+	        this.priority = priority
+	      }
+	      this.enqueue = function (element, priority) {
+	        let queueElement = new QueueElement(element, priority)
+	        let added = false
+	        for (let i = 0; i < items.length; i++) {
+	          if (queueElement.priority < items[i].priority) {
+	            items.splice(i, 0, queueElement)
+	            added = true
+	            break
+	          }
+	        }
+	        if (!added) {
+	          items.push(queueElement)
+	        }
+	      }
+	      this.print = function () {
+	        console.log(items)
+	        for (let i = 0; i < items.length; i++) {
+	          console.log(`${items[i].element}-${items[i].priority}`)
+	        }
+	      }
+	      //  其他方法和默认的Queue实现相同
+      }
+      let priorityQueue = new PriorityQueue()
+      priorityQueue.enqueue('John', 2)
+      priorityQueue.enqueue('Jack', 1)
+      priorityQueue.enqueue('Camila', 1)
+      priorityQueue.print()
+      //  循环队列--击鼓传花
+      function hotPotato (nameList, num) {
+        let queue1 = new Queue()
+        for (let i = 0; i < nameList.length; i++) {
+          queue1.enqueue(nameList[i])
+        }
+        let eliminated = ''
+        while (queue.size > 1) {
+          for (let i = 0; i < num; i++) {
+            queue1.enqueue(queue.dequeue())
+          }
+          eliminated = queue1.dequeue()
+          console.log(elliminated + '在击鼓传花游戏中被淘汰。')
+        }
+        return queue.dequeue()
+      }
+      let names = ['John', 'Jack', 'Camila', 'Ingrid', 'Carl']
+      let winner = hotPotato(names, 7)
+      console.log('The winner is:' + winner)
     },
     es6Demo () {
       console.log('用ECMAScript6语法实现Queue类')
