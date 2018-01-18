@@ -4,6 +4,7 @@
     <HelloWorld/>
     <stackContent />
     <duilieContent />
+    <itemsContent />
   </div>
 </template>
 
@@ -11,13 +12,15 @@
 import HelloWorld from './components/HelloWorld'
 import stackContent from './components/stackContent'
 import duilieContent from './components/duilieContent'
+import itemsContent from './components/itemsContent'
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
     stackContent,
-    duilieContent
+    duilieContent,
+    itemsContent
   }
 }
 </script>
