@@ -19,6 +19,14 @@
        		}
        		return hash % 37;
        	}
+        //  创建更好的散列函数,最受社区推崇的散列函数之一
+        var djb2HashCode = function (key) {
+          var hash = 5381;
+          for (var i = key.length - 1; i >= 0; i--) {
+            hash = hash * 33 + key.charCodeAt(i);
+          }
+          return hash % 1013;
+        }
        	//  为了实现一个使用了分离链接的HashTable实例，我们需要一个新的辅助类来表示将要假如LinkedList实例的元素。我们管它叫ValuePair类
        	var ValuePair = function (key, value) {
        		this.key = key;
@@ -37,11 +45,49 @@
        	};
        	//  get方法：返回根据键值检索到的特定的值
        	this.get = function (key) {
-       		return table[loseloseHashCode(key)];
+       		var position = loseloseHashCode(key);
+          if (table[position] !== undefined) {
+            //  遍历链表来寻找键/值
+            var current = table[position].getHead();
+            while (current.next) {
+              if (current.element.next === key) {
+                return current.element.value;
+              }
+              current = current.next;
+            }
+            //  检查元素在链表第一个或最后一个节点的情况
+            if (current.element.key === key) {
+              return current.element.value;
+            }
+          }
+          return undefined;
        	}
        	//  remove方法：根据键值从散列表中移除值
        	this.remove = function (key) {
-       		table[loseloseHashCode[key]] = undefined;
+          var position = loseloseHashCode[key];
+          if (table[position] !== undefined) {
+            var current = table[position].getHead()
+                previous;
+            while (current.next) {
+              if (current.element.key === key) {
+                table[position].remove(current.element);
+                if (table[position].isEmpty()) {
+                  table[position] = undefined;
+                }
+                return true;
+              }
+              current = current.next;
+            }
+            //  检查是否为第一个或最后一个元素
+            if (current.element.key === key) {
+              table[position].remove(current.element);
+              if (table[position].isEmpty()) {
+                table[position] = undefined;
+              }
+              return true;
+            }
+          }
+          return false;
        	}
        }
        //  测试HashTable类
@@ -64,18 +110,18 @@
        	  this.append = function (element) {
        	  	let node = new Node(element),
        	  		current;
-   	  		if (head === null) {  //  列表中第一个节点
-   	  			head = node;
-   	  		} else {
-   	  			current = head;
-   	  			//  循环列表，直到找到最后一项
-   	  			while (current.next) {
-   	  				current = current.next;
-   	  			}
-   	  			//  找到最后一项，将其next赋为node，建立链接
-   	  			current.next = node;
-   	  		}
-   	  		length++;  //  更新列表的长度
+     	  		if (head === null) {  //  列表中第一个节点
+     	  			head = node;
+     	  		} else {
+     	  			current = head;
+     	  			//  循环列表，直到找到最后一项
+     	  			while (current.next) {
+     	  				current = current.next;
+     	  			}
+     	  			//  找到最后一项，将其next赋为node，建立链接
+     	  			current.next = node;
+     	  		}
+     	  		length++;  //  更新列表的长度
        	  };
        	  //  在任意位置插入元素
        	  this.insert = function (position, element) {
@@ -134,14 +180,14 @@
        	  this.indexOf = function (element) {
        	  	let current = head,  //  {1}
        	  		index = 0;
-   	  		while (current) {
-   	  			if (element === current.element) {
-   	  				return index;
-   	  			}
-   	  			index++;
-   	  			current = current.next;
-   	  		}
-   	  		return -1;
+     	  		while (current) {
+     	  			if (element === current.element) {
+     	  				return index;
+     	  			}
+     	  			index++;
+     	  			current = current.next;
+     	  		}
+     	  		return -1;
        	  };
        	  //  队列是否为空
        	  this.isEmpty = function () {
