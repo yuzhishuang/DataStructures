@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    (function(){
+       //  AVL树是一种自平衡二叉搜索树，意思是任何一个节点左右两侧子树的高度之差最多为1.也就是说这种树会在添加或移除节点时尽量试着成为一颗完全树
+       function AdelsonVelskiiLandi () {
+       	var Node = function (key) {
+       		this.key = key;
+       		this.left = null;
+       		this.right = null;
+       	};
+       	var root = null;
+       	//  向AVL树插入新节点
+       	//  计算节点高度的代码
+       	var heightNode = function (node) {
+       		if (node === null) {
+       			return -1;
+       		} else {
+       			return Math.max(heightNode(node.left), heightNode(node.right)) + 1;
+       		}
+       	}
+       	var insertNode = function (node, element) {
+       		if (node === null) {
+       			node = new Node(element);
+       		} else if (element < node.key) {
+       			node.left = insertNode(node.left, element);
+       			if (node.left !== null) {
+       				//  确认是否需要平衡
+       			}
+       		} else if (element > node.key) {
+       			node.right = insertNode(node.right, element);
+       			if (node.right !== null) {
+       				//  确认是否需要平衡
+       			}
+       		}
+       		return node;
+       	};
+       }
+    })();
+</script>
+</body>
+</html>
