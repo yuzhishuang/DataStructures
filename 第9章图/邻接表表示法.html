@@ -60,6 +60,28 @@
        		return length;
        	}
        }
+      //  队列
+      function Queue () {
+        let items = [];
+        this.enqueue = function (element) {
+          items.push(element);
+        };
+        this.dequeue = function () {
+          return items.shift();
+        };
+        this.front = function () {
+          return items[0];
+        };
+        this.isEmpty = function () {
+          return items.length == 0;
+        };
+        this.size = function () {
+          return items.length;
+        }
+        this.print = function () {
+          console.log(items.toString());
+        }
+      }
     	//  创建Graph类
     	function Graph () {
     		var vertices = [];  //  使用一个数组来存储图中所有顶点的名字
@@ -86,7 +108,36 @@
     				s += '\n';
     			}
     			return s;
-    		}
+    		};
+        //  广度优先搜索算法会从指定的第一个顶点开始遍历图，先访问其所有的相邻点，就像一次访问图的一层。换句话说，就是先宽后深地访问顶点
+        var initializeColor = function () {
+          var color = [];
+          for (var i = vertices.length - 1; i >= 0; i--) {
+            color[vertices[i]] = 'white';  //  1
+          }
+          return color;
+        };
+        this.bfs = function (v, callback) {
+          var color = initializeColor();  //  2
+          queue = new Queue();  //  3
+          queue.enqueue(v);  //  4
+          while (!queue.isEmpty()) {  //  5
+            var u = queue.dequeue(),  //  6
+                neighbors = adjList.get(u);  //  7
+            color[u] = 'grey';  //  8
+            for (var i = 0; i < neighbors.length; i++) {  //  9
+              var w = neighbors[i];  //  10
+              if (color[w] === 'white') {  //  11
+                color[w] = 'grey';  //  12
+                queue.enqueue(w);  //  13
+              }
+            }
+            color[u] = 'black';  //  14
+            if (callback) {  //  15
+              callback(u);
+            }
+          }
+        };
     	}
     	//  测试代码
     	var graph = new Graph();
@@ -105,6 +156,11 @@
     	graph.addEdge('B', 'F');
     	graph.addEdge('E', 'I');
     	console.log(graph.toString());
+      console.log('广度优先搜索算法');
+      function printNode (value) {
+        console.log('Visited vertex:' + value);
+      }
+      graph.bfs(myVertices[0], printNode);
     })();
 </script>
 </body>
