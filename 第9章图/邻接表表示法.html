@@ -60,6 +60,31 @@
        		return length;
        	}
        }
+      //  栈
+      function Stack () {
+        let items = [];
+        this.push = function (element) {
+          items.push(element);
+        };
+        this.pop = function () {
+          return items.pop();
+        };
+        this.peek = function () {
+          return items[items.length - 1];
+        };
+        this.isEmpty = function () {
+          return items.length == 0;
+        };
+        this.size = function () {
+          return items.length;
+        };
+        this.clear = function () {
+          items = [];
+        };
+        this.print = function () {
+          console.log(items.toString());
+        };
+      } 
       //  队列
       function Queue () {
         let items = [];
@@ -118,7 +143,7 @@
           return color;
         };
         this.bfs = function (v, callback) {
-          var color = initializeColor();  //  2
+          var color = initializeColor(),  //  2
           queue = new Queue();  //  3
           queue.enqueue(v);  //  4
           while (!queue.isEmpty()) {  //  5
@@ -138,11 +163,108 @@
             }
           }
         };
+        //  用BFS寻找最短路径
+        this.BFS = function (v) {
+          var color = initializeColor(),
+          queue = new Queue(),
+          d = [],  //  1  表示距离
+          pred = [];  //  2   表示前溯点
+          queue.enqueue(v);
+          for (var i = 0; i < vertices.length; i++) {  //  3
+            d[vertices[i]] = 0;  //  4
+            pred[vertices[i]] = null;  //  5
+          }
+          while (!queue.isEmpty()) {
+            var u = queue.dequeue(),
+            neighbors = adjList.get(u);
+            color[u] = 'grey';
+            for (i = 0; i < neighbors.length; i++) {
+              var w = neighbors[i];
+              if (color[w] === 'white') {
+                color[w] = 'grey';
+                d[w] = d[u] + 1;  //  6
+                pred[w] = u;  //  7
+                queue.enqueue(w);  
+              }
+            }
+            color[u] = 'black';
+          }
+          return {
+            distances: d,
+            predecessors: pred
+          };
+        };
+        //  深度优先搜索
+        //  深度优先搜索算法将会从第一个指定的顶点开始遍历图，沿着路径直到这条路径最后一个顶点被访问了，接着原路回退并探索下一条路径，它是先深度后广度的访问顶点
+        var dfsVisit = function (u, color, callback) {
+          color[u] = 'grey';
+          if (callback) {
+            callback(u);
+          }
+          var neighbors = adjList.get(u);
+          for (var i = 0; i < neighbors.length; i++) {
+            var w = neighbors[i];
+            if (color[w] === 'white') {
+              dfsVisit(w, color, callback);
+            }
+          }
+          color[u] = 'black';
+        };
+        this.dfs = function (callback) {
+          var color = initializeColor();
+          for (var i = 0; i < vertices.length; i++) {
+            if (color[vertices[i]] === 'white') {
+              (function (i) {
+                dfsVisit(vertices[i], color, callback);
+              })(i)
+            }
+          }
+        };
+        //  希望深度优先搜索算法遍历图G的所有节点，构建森林以及一组源顶点（根），并输出两个数组：发现时间和完成探索时间
+        var time = 0;  //  1
+        var DFSVisit = function (u, color, d, f, p) {
+          console.log('discovered' + u);
+          color[u] = 'grey';
+          d[u] = ++time;  //  5
+          var neighbors = adjList.get(u);
+          for (var i = 0; i < neighbors.length; i++) {
+            var w = neighbors[i];
+            if (color[w] === 'white') {
+              p[w] = u;  //  6
+              DFSVisit(w, color, d, f, p);
+            }
+          }
+          color[u] = 'black';
+          f[u] = ++time;  //  7
+          console.log('explored' + u);
+        };
+        this.DFS = function () {
+          var color = initializeColor();  //  2
+          d = [];
+          f = [];
+          p = [];
+          time = 0;
+          for (var i = 0; i < vertices.length; i++) {  //  3
+            f[vertices[i]] = 0;
+            d[vertices[i]] = 0;
+            p[vertices[i]] = null;
+          }
+          for (i = 0; i < vertices.length; i++) {
+            if (color[vertices[i]] === 'white') {
+              DFSVisit(vertices[i], color, d, f, p);
+            }
+          }
+          return {  //  4
+            discovery: d,
+            finished: f,
+            predecessors: p
+          };
+        };
     	}
     	//  测试代码
     	var graph = new Graph();
     	var myVertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
-    	for (var i = myVertices.length - 1; i >= 0; i--) {
+    	for (var i = 0; i < myVertices.length; i++) {
     		graph.addVertex(myVertices[i]);
     	}
     	graph.addEdge('A', 'B');
@@ -161,6 +283,27 @@
         console.log('Visited vertex:' + value);
       }
       graph.bfs(myVertices[0], printNode);
+      console.log('BFS优化');
+      var shrotestPathA = graph.BFS(myVertices[0]);
+      console.log(shrotestPathA);
+      //  通过前溯点数组，我们可以用下面这段代码来构建从顶点A到其他顶点的路径
+      var fromVertex = myVertices[0];
+      for (var i = 1; i < myVertices.length; i++) {
+        var toVertex = myVertices[i],
+        path = new Stack();
+        for (var v = toVertex; v !== fromVertex; v = shrotestPathA.predecessors[v]) {
+          path.push(v);
+        }
+        path.push(fromVertex);
+        var s = path.pop();
+        while (!path.isEmpty()) {
+          s += '-' + path.pop();
+        }
+        console.log(s);
+      }
+      //  深度优先搜索测试
+      console.log('深度优先搜索测试');
+      graph.dfs(printNode);
     })();
 </script>
 </body>
