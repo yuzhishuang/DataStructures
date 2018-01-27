@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    (function(){
+       //  每个浏览器都有自己的上线。可用以下代码测试
+       var i = 0;
+       function recursiveFn () {
+       	i++;
+       	recursiveFn();
+       }
+       try {
+       	recursiveFn();
+       } catch (ex) {
+       	alert('i = ' + i + 'error:' + ex);
+       }
+    })();
+</script>
+</body>
+</html>
