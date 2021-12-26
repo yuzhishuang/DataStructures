@@ -1,5 +1,6 @@
 // 选择排序的大致思路是:找到数据结构中的最小值并将其放置在第一位,接着找到第二小的值,并将其放到第二位,以此类推
 // 复杂度为O(n方)
+// 每次循环先找到比当前值小的下标,最后在执行一次交换就可以了
 
 const Compare = {
   LESS_THAN: 'less',
@@ -31,5 +32,6 @@ function selectionSort(array, compareFn = defaultCompare) {
   }
   return array;
 }
+
 const arr = [1, 9, 7, 5, 2, 3];
 console.log(selectionSort(arr))

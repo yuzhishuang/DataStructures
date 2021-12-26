@@ -1,4 +1,7 @@
-//
+// 通过构建有序序列,对于未排序数据,在已排序序列中从后向前扫描,找到相应位置并插入
+// 最好的情况,排好序的序列,时间复杂度n
+// 最坏的情况,逆序排列,时间复杂度为n方
+// 空间复杂度是o(1)
 
 const Compare = {
   LESS_THAN: 'less',
@@ -29,4 +32,27 @@ function insertionSort(array, compareFn = defaultCompare) {
   return array;
 }
 
-console.log(insertionSort([3, 5, 1, 4, 2]))
+function insertionSort1(array) {
+  for (let i = 1; i < array.length; i++) {
+    let tmp = array[i], j = i - 1;
+    for (; j >= 0 && array[j] > tmp; j--) {
+      array[j + 1] = array[j]
+    }
+    array[j + 1] = tmp
+  }
+  return array;
+}
+
+function insertionSort2(array) {
+  if (Array.isArray(array)) {
+    for (let i = 1; i < array.length; i++) {
+
+    }
+  }
+  return array
+}
+
+
+
+console.log(insertionSort2([3, 5, 1, 4, 2]))
+
