@@ -71,6 +71,10 @@ class AVLTree extends BinarySearchTree {
   }
   // 左-右(LR): 向右的双旋转
   // 左侧子节点告诉大于右侧子节点的高度,并且左侧子节点右侧较重
+  // 先做一次LL旋转,再做一次RR旋转
+  rotationLR(node) {
+
+  }
 }
 const tree = new AVLTree()
 tree.insert(11);
